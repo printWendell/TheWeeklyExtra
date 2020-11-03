@@ -6,9 +6,13 @@ const Port = process.env.PORT || 5000;
 
 const { User } = require('./models/User');
 
+const authRoutes = require('./routes/authRoutes')
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: "*", credentials: true }));
+
+app.use("/api/auth", authRoutes)
 
 // Serve up static assets (usually on heroku)
 if (process.env.NODE_ENV === 'production') {
