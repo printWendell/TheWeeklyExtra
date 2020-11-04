@@ -1,18 +1,19 @@
 const JWT = require('jsonwebtoken')
+const createError = require("http-errors");
 
 // function to protect routes
 const requireAuth = (req, res, next) => {
     const token = req.cookies.jwt;
     if (token) {
-      JWT.verify(token, process.env.ACCESS_JWT_SECRET, (err) => {
+      JWT.verify(token, process.env.JWT_SECRET_KEY, (err) => {
         if (err) {
-            res.status(401).send(err.message);
+            return next(createError.Unauthorized(err.message)) 
         } else {
             next();
         }
         });
     } else {
-        res.status(401);
+       return next(createError.Unauthorized()) 
     }
 }
 
