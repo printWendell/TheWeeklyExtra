@@ -49,5 +49,8 @@ module.exports.login_post = async (req, res, next) => {
 }
 
 module.exports.logout_get = (req, res, next) => {
-    res.send('logout')
+    const token = "";
+    res.cookie("jwt", token, { maxAge: ms("1s") });
+    res.clearCookie("jwt");
+    res.status(200).send({ token });
 }
