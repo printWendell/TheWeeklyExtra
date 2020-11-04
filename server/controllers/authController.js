@@ -15,6 +15,8 @@ module.exports.signup_post = async(req, res, next) => {
         
         // sign token to user
         const token = await signAccessToken(newUser.id)
+        // send cookier to browser
+        res.cookie('jwt', token, { httpOnly: true, maxAge: ms('1d'), secure: process.env.NODE_ENV === "production" ? true : false })
         res.status(201).send({newUser, token})
     } catch (error) {
         // unprocessable request
@@ -34,7 +36,10 @@ module.exports.login_post = async (req, res, next) => {
         const userMatched = await User.validatePassword(results)
         if(!userMatched) throw createError.Unauthorized(`Username/Password not valid`)
 
-        const token = await signAccessToken(user.id)        
+        // sign token to user
+        const token = await signAccessToken(user.id)
+        // send cookier to browser
+        res.cookie('jwt', token, { httpOnly: true, maxAge: ms('1d'), secure: process.env.NODE_ENV === "production" ? true : false })        
         res.status(200).send({ loggedin : user, token });
     } catch (error) {
         if (error.isJoi === true)

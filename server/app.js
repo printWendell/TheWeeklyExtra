@@ -22,7 +22,6 @@ if (process.env.NODE_ENV === 'production') {
 
 app.get('/api/', async (req, res) => {
   const results = await User.findAll()
-  console.log(results)
     res.json(results);
 });
 
