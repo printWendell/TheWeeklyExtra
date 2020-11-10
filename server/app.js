@@ -24,11 +24,6 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, "../client/build")));
 }
 
-app.get('/api/', async (req, res) => {
-  const results = await User.findAll()
-    res.json(results);
-});
-
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });

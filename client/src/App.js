@@ -5,7 +5,7 @@ function App() {
   // test expresss call
   useEffect(() => {
     const testApi = async() => {
-      const res = await fetch("/api/")
+      const res = await fetch("/api/news/")
       const data = await res.json()
       console.log(data)
     }
