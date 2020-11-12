@@ -1,20 +1,16 @@
-import { useEffect } from 'react';
+import React from 'react';
 import './App.css';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Home from './Components/Home';
 
 function App() {
-  // test expresss call
-  useEffect(() => {
-    const testApi = async() => {
-      const res = await fetch("/api/news/")
-      const data = await res.json()
-      console.log(data)
-    }
-    testApi()
-  }, [])
-
   return (
     <div className="App">
-      <h1>Hello From React</h1>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={Home} />
+        </Switch>
+      </Router>
     </div>
   );
 }

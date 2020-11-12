@@ -6,8 +6,6 @@ const createError = require('http-errors');
 const cookieParser = require("cookie-parser");
 const Port = process.env.PORT || 5000;
 
-const { User } = require('./models/User');
-
 const newsRoutes = require("./routes/newsRoutes");
 const authRoutes = require('./routes/authRoutes');
 
@@ -35,7 +33,7 @@ app.use(async (req, res, next) => {
 });
 
 // error handler
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   res.status(err.status || 500);
   res.send({
     error: {
