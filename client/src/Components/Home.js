@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import Articles from './Articles';
 
 function Home() {
   const [homeNews, setHomeNews] = useState([]);
@@ -14,6 +15,8 @@ function Home() {
     getHomeNews();
   }, []);
 
-  return homeNews.map((news, index) => <h2 key={index}>{news.title}</h2>);
+  return homeNews.map((article, index) => (
+    <Articles article={article} key={index} />
+  ));
 }
 export default Home;
