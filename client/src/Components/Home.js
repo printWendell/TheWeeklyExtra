@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+// import Grid from '@material-ui/core/Grid';
 import Articles from './Articles';
 
 function Home() {
@@ -16,7 +17,9 @@ function Home() {
   }, []);
 
   return homeNews.map((article, index) => (
-    <Articles article={article} key={index} />
+    <article key={index}>
+      <Articles article={article} />
+    </article>
   ));
 }
 export default Home;
