@@ -9,8 +9,6 @@ import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
-// make text responsive//
-
 //=======material-ui css styles============//
 const useStyles = makeStyles((theme) => ({
   articleLink: {
@@ -29,8 +27,18 @@ const useStyles = makeStyles((theme) => ({
     objectFit: 'cover',
   },
   [theme.breakpoints.down('sm')]: {
+    // articleLink: {
+    //   textAlign: 'center',
+    // },
     flexToBlock: {
       display: 'block',
+    },
+    contentImg: {
+      display: 'block',
+      width: '70%',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      marginBottom: '3rem',
     },
   },
   [theme.breakpoints.down('xs')]: {
@@ -40,11 +48,27 @@ const useStyles = makeStyles((theme) => ({
     articleText: {
       display: 'none',
     },
+    contentImg: {
+      marginTop: '1.2rem',
+      width: '100%',
+    },
   },
 }));
 
+// variable for responsive fonts
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme);
+
+// change h5 object better responsiveness
+theme.typography.h5 = {
+  fontSize: '3rem',
+  '@media (min-width:600px)': {
+    fontSize: '1.5rem',
+  },
+  [theme.breakpoints.down('xs')]: {
+    fontSize: '1.1rem',
+  },
+};
 
 // =========Component==================== //
 function Articles(article) {
