@@ -1,0 +1,137 @@
+import React from 'react';
+import PropTypes from 'prop-types';
+import {
+  makeStyles,
+  createMuiTheme,
+  responsiveFontSizes,
+  ThemeProvider,
+} from '@material-ui/core/styles';
+import Box from '@material-ui/core/Box';
+import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
+
+//=======material-ui css styles============//
+
+const useStyles = makeStyles((theme) => ({
+  articleLink: {
+    color: 'black',
+    textDecoration: 'none',
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
+  articleContent: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  articleText: {
+    color: '#37474f',
+  },
+  contentImg: {
+    width: '15vw',
+    minWidth: '220px',
+    objectFit: 'cover',
+    marginRight: '5rem',
+  },
+  [theme.breakpoints.down('sm')]: {
+    // articleLink: {
+    //   textAlign: 'center',
+    // },
+    articleContent: {
+      display: 'block',
+    },
+    contentImg: {
+      display: 'block',
+      width: '70%',
+      marginLeft: 'auto',
+      marginRight: 'auto',
+      marginBottom: '3rem',
+    },
+  },
+  [theme.breakpoints.down('xs')]: {
+    articleLink: {
+      textAlign: 'center',
+    },
+    articleText: {
+      display: 'none',
+    },
+    contentImg: {
+      marginTop: '1.2rem',
+      width: '100%',
+    },
+  },
+}));
+
+// variable for responsive fonts
+let theme = createMuiTheme();
+theme = responsiveFontSizes(theme);
+
+// change h5 object better responsiveness
+theme.typography.h5 = {
+  fontSize: '3rem',
+  '@media (min-width:600px)': {
+    fontSize: '1.5rem',
+  },
+  [theme.breakpoints.down('xs')]: {
+    fontSize: '1.1rem',
+  },
+};
+
+// =========Component==================== //
+function Articles({ article }) {
+  let classes = useStyles();
+
+  // convert utc to string date
+  function changeDate(date) {
+    const utcDate = new Date(`${date}`);
+    return utcDate.toDateString();
+  }
+
+  return (
+    <>
+      <a
+        className={`article-link ${classes.articleLink}`}
+        href={article.url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Box className={`article-title ${classes.articleTitle}`} mt={3}>
+          <ThemeProvider theme={theme}>
+            <Typography variant="h5">{article.title}</Typography>
+          </ThemeProvider>
+        </Box>
+
+        <Box className={`article-date ${classes.articleText}`} mt={1} mb={1}>
+          <Typography variant="caption" gutterBottom>
+            {changeDate(article.publishedAt)}
+          </Typography>
+        </Box>
+
+        <Box className={`article-content  ${classes.articleContent}`} mb={4}>
+          <Box className="article-content--img">
+            <img
+              className={classes.contentImg}
+              src={article.urlToImage}
+              alt=""
+            />
+          </Box>
+          <Box
+            className={`article-content--description ${classes.articleText} ${classes.articleDescription} `}
+          >
+            <ThemeProvider>
+              <Typography variant="body1">{article.description}</Typography>
+            </ThemeProvider>
+          </Box>
+        </Box>
+        <Divider />
+      </a>
+    </>
+  );
+}
+
+// PropTypes ensures that passed down props adhere to the type checking
+Articles.propTypes = {
+  article: PropTypes.object,
+};
+export default Articles;

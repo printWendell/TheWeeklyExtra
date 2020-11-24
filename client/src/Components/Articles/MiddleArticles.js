@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   makeStyles,
   createMuiTheme,
@@ -6,7 +7,6 @@ import {
   ThemeProvider,
 } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
-import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 
 //=======material-ui css styles============//
@@ -19,23 +19,42 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   articleText: {
+    width: '20vw',
+  },
+  articleDate: {
     color: '#37474f',
   },
   contentImg: {
-    width: '15vw',
-    minWidth: '220px',
+    width: '20vw',
+    height: '28vh',
+    minWidth: '307px',
     objectFit: 'cover',
   },
+  [theme.breakpoints.down('md')]: {
+    articleText: {
+      width: '25vw',
+    },
+    contentImg: {
+      width: '25vw',
+      minWidth: '220px',
+
+      objectFit: 'cover',
+    },
+  },
   [theme.breakpoints.down('sm')]: {
-    // articleLink: {
-    //   textAlign: 'center',
-    // },
+    articleLink: {
+      textAlign: 'center',
+    },
+    articleText: {
+      width: '100%',
+    },
     flexToBlock: {
       display: 'block',
     },
     contentImg: {
       display: 'block',
       width: '70%',
+      height: 'auto',
       marginLeft: 'auto',
       marginRight: 'auto',
       marginBottom: '3rem',
@@ -46,6 +65,10 @@ const useStyles = makeStyles((theme) => ({
       textAlign: 'center',
     },
     articleText: {
+      width: '100%',
+      marginBottom: '2rem',
+    },
+    articleDate: {
       display: 'none',
     },
     contentImg: {
@@ -59,19 +82,8 @@ const useStyles = makeStyles((theme) => ({
 let theme = createMuiTheme();
 theme = responsiveFontSizes(theme);
 
-// change h5 object better responsiveness
-theme.typography.h5 = {
-  fontSize: '3rem',
-  '@media (min-width:600px)': {
-    fontSize: '1.5rem',
-  },
-  [theme.breakpoints.down('xs')]: {
-    fontSize: '1.1rem',
-  },
-};
-
 // =========Component==================== //
-function Articles(article) {
+function MiddleArticles(article) {
   const classes = useStyles();
   // convert utc to string date
   function changeDate(date) {
@@ -80,49 +92,47 @@ function Articles(article) {
   }
 
   return (
-    <>
+    <Box display="flex" flexDirection="row">
       <a
         className={`article ${classes.articleLink}`}
         href={article.article.url}
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Box className="article-title" mt={3}>
-          <ThemeProvider theme={theme}>
-            <Typography variant="h5">{article.article.title}</Typography>
-          </ThemeProvider>
-        </Box>
-        <Box className={`article-date ${classes.articleText}`} mt={1} mb={1}>
-          <Typography variant="caption" gutterBottom>
-            {changeDate(article.article.publishedAt)}
-          </Typography>
-        </Box>
         <Box
           className={`article-content ${classes.flexToBlock}`}
           display="flex"
           alignItems="center"
           mb={4}
         >
-          <Box className="article-content--img" mr={4}>
+          <Box className="article-content--img">
             <img
               className={classes.contentImg}
               src={article.article.urlToImage}
               alt=""
             />
           </Box>
-          <Box
-            className={`article-content--description ${classes.articleText}`}
-          >
-            <ThemeProvider>
-              <Typography variant="body1">
-                {article.article.description}
-              </Typography>
-            </ThemeProvider>
-          </Box>
         </Box>
-        <Divider />
+        <Box className={`article-title ${classes.articleText}`} mt={3}>
+          <ThemeProvider theme={theme}>
+            <Typography variant="h6">{article.article.title}</Typography>
+          </ThemeProvider>
+        </Box>
+        <Box
+          className={`article-date ${classes.articleText}  ${classes.articleDate}`}
+          mb={6}
+        >
+          <Typography variant="caption" gutterBottom>
+            {changeDate(article.article.publishedAt)}
+          </Typography>
+        </Box>
       </a>
-    </>
+    </Box>
   );
 }
-export default Articles;
+
+// PropTypes ensures that passed down props adhere to the type checking
+MiddleArticles.propTypes = {
+  article: PropTypes.object,
+};
+export default MiddleArticles;
