@@ -1,0 +1,53 @@
+.article-link {
+  color: black;
+  text-decoration: none;
+}
+
+.article-link:hover {
+  text-decoration: underline;
+}
+
+.article-date {
+  color: #37474f;
+}
+
+.article-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.article-content--img {
+  width: 15vw;
+  min-width: 220px;
+  object-fit: cover;
+  margin-right: 5rem;
+}
+
+@media screen and (max-width: 960px) {
+  .article-content {
+    display: block;
+  }
+  .article-content--img {
+    display: block;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .article-link {
+    text-align: center;
+  }
+
+  .article-date,
+  .article-content--description {
+    display: none;
+  }
+
+  .article-content--img {
+    width: 80%;
+  }
+}

@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  makeStyles,
   createMuiTheme,
   responsiveFontSizes,
   ThemeProvider,
@@ -9,59 +8,6 @@ import {
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
-
-//=======material-ui css styles============//
-
-const useStyles = makeStyles((theme) => ({
-  articleLink: {
-    color: 'black',
-    textDecoration: 'none',
-    '&:hover': {
-      textDecoration: 'underline',
-    },
-  },
-  articleContent: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  articleText: {
-    color: '#37474f',
-  },
-  contentImg: {
-    width: '15vw',
-    minWidth: '220px',
-    objectFit: 'cover',
-    marginRight: '5rem',
-  },
-  [theme.breakpoints.down('sm')]: {
-    // articleLink: {
-    //   textAlign: 'center',
-    // },
-    articleContent: {
-      display: 'block',
-    },
-    contentImg: {
-      display: 'block',
-      width: '70%',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      marginBottom: '3rem',
-    },
-  },
-  [theme.breakpoints.down('xs')]: {
-    articleLink: {
-      textAlign: 'center',
-    },
-    articleText: {
-      display: 'none',
-    },
-    contentImg: {
-      marginTop: '1.2rem',
-      width: '100%',
-    },
-  },
-}));
 
 // variable for responsive fonts
 let theme = createMuiTheme();
@@ -79,46 +25,49 @@ theme.typography.h5 = {
 };
 
 // =========Component==================== //
-function Articles({ article }) {
-  let classes = useStyles();
+function Articles({ article, articleSection }) {
+  useEffect(() => {
+    if (articleSection === 'bottom') {
+      require('./ArticleStyles/Articles.css');
+    }
+  }, []);
 
   // convert utc to string date
   function changeDate(date) {
     const utcDate = new Date(`${date}`);
     return utcDate.toDateString();
   }
+  console.log(articleSection);
 
   return (
     <>
       <a
-        className={`article-link ${classes.articleLink}`}
+        className="article-link"
         href={article.url}
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Box className={`article-title ${classes.articleTitle}`} mt={3}>
+        <Box className="article-title" mt={3} mb={2}>
           <ThemeProvider theme={theme}>
             <Typography variant="h5">{article.title}</Typography>
           </ThemeProvider>
         </Box>
 
-        <Box className={`article-date ${classes.articleText}`} mt={1} mb={1}>
+        <Box className="article-date" mt={1} mb={1}>
           <Typography variant="caption" gutterBottom>
             {changeDate(article.publishedAt)}
           </Typography>
         </Box>
 
-        <Box className={`article-content  ${classes.articleContent}`} mb={4}>
-          <Box className="article-content--img">
+        <Box className="article-content" mb={4}>
+          <Box>
             <img
-              className={classes.contentImg}
+              className="article-content--img"
               src={article.urlToImage}
               alt=""
             />
           </Box>
-          <Box
-            className={`article-content--description ${classes.articleText} ${classes.articleDescription} `}
-          >
+          <Box className="article-content--description">
             <ThemeProvider>
               <Typography variant="body1">{article.description}</Typography>
             </ThemeProvider>
@@ -133,5 +82,6 @@ function Articles({ article }) {
 // PropTypes ensures that passed down props adhere to the type checking
 Articles.propTypes = {
   article: PropTypes.object,
+  articleSection: PropTypes.string,
 };
 export default Articles;

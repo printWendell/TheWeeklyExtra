@@ -87,7 +87,7 @@ function Home() {
       <section className="home-bottom-section">
         {homeNews.slice(10).map((article, index) => (
           <article key={index} className={classes.article}>
-            <Articles article={article} />
+            <Articles article={article} articleSection="bottom" />
           </article>
         ))}
       </section>
