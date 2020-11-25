@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
     color: '#37474f',
   },
   contentImg: {
-    width: '20vw',
     height: '28vh',
-    minWidth: '307px',
+    minWidth: '320px',
+    width: '20vw',
     objectFit: 'cover',
   },
   [theme.breakpoints.down('md')]: {
@@ -35,9 +35,8 @@ const useStyles = makeStyles((theme) => ({
       width: '25vw',
     },
     contentImg: {
-      width: '25vw',
       minWidth: '220px',
-
+      width: '28vw',
       objectFit: 'cover',
     },
   },
