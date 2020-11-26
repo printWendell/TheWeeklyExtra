@@ -1,3 +1,7 @@
+@import './TopArticles.css';
+
+/* ================all articles================== */
+
 .article-link {
   color: black;
   text-decoration: none;
@@ -11,24 +15,109 @@
   color: #37474f;
 }
 
-.article-content {
+/* ================middle articles============== */
+
+.middle-articles > .article-link > .article-title {
+  width: 20vw;
+}
+
+.middle-articles
+  > .article-link
+  > .article-content
+  > .article-content--img
+  > .content-img {
+  height: 28vh;
+  width: 20vw;
+  min-width: 380px;
+  object-fit: cover;
+}
+
+.middle-articles
+  > .article-link
+  > .article-content
+  > .article-content--description {
+  display: none;
+}
+
+.middle-articles > .article-link > .divider {
+  display: none;
+}
+
+/* ========bottom(normal) artiicles ========== */
+
+.bottom-articles > .article-link > .article-content {
   display: flex;
   flex-direction: row;
   align-items: center;
 }
 
-.article-content--img {
+.bottom-articles
+  > .article-link
+  > .article-content
+  > .article-content--img
+  > .content-img {
   width: 15vw;
   min-width: 220px;
   object-fit: cover;
   margin-right: 5rem;
 }
 
+/* ======================Media Queries ================================= */
+@media screen and (max-width: 1396px) {
+  .middle-articles > .article-link > .article-title {
+    width: 28vw;
+  }
+
+  .middle-articles
+    > .article-link
+    > .article-content
+    > .article-content--img
+    > .content-img {
+    width: 28vw;
+    min-width: 200px;
+    object-fit: cover;
+  }
+}
+
 @media screen and (max-width: 960px) {
-  .article-content {
+  /* =============middle==================== */
+
+  .middle-articles > .article-link > .article-title {
+    width: 100%;
+  }
+  .middle-articles
+    > .article-link
+    > .article-content
+    > .article-content--img
+    > .content-img {
+    display: block;
+    width: 70%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 3rem;
+  }
+  .middle-articles
+    > .article-link
+    > .article-content
+    > .article-content--description {
     display: block;
   }
-  .article-content--img {
+
+  .middle-articles > .article-link > .divider {
+    display: block;
+  }
+
+  /* =============bottom==================== */
+
+  .bottom-articles > .article-link > .article-content {
+    display: block;
+  }
+  .bottom-articles
+    > .article-link
+    > .article-content
+    > .article-content--img
+    > .content-img {
     display: block;
     width: 70%;
     margin-left: auto;
@@ -47,7 +136,17 @@
     display: none;
   }
 
-  .article-content--img {
+  .middle-articles
+    > .article-link
+    > .article-content
+    > .article-content--description {
+    display: none;
+  }
+  .bottom-articles
+    > .article-link
+    > .article-content
+    > .article-content--img
+    > .content-img {
     width: 80%;
   }
 }

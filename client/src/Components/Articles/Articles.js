@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {
   createMuiTheme,
@@ -8,6 +8,7 @@ import {
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
+import './ArticleStyles/Articles.css';
 
 // variable for responsive fonts
 let theme = createMuiTheme();
@@ -26,12 +27,6 @@ theme.typography.h5 = {
 
 // =========Component==================== //
 function Articles({ article, articleSection }) {
-  useEffect(() => {
-    if (articleSection === 'bottom') {
-      require('./ArticleStyles/Articles.css');
-    }
-  }, []);
-
   // convert utc to string date
   function changeDate(date) {
     const utcDate = new Date(`${date}`);
@@ -40,7 +35,17 @@ function Articles({ article, articleSection }) {
   console.log(articleSection);
 
   return (
-    <>
+    <Box
+      className={
+        articleSection === 'bottom'
+          ? 'bottom-articles'
+          : articleSection === 'middle'
+          ? 'middle-articles'
+          : articleSection === 'top-left'
+          ? 'top-left-articles'
+          : 'top-right-articles'
+      }
+    >
       <a
         className="article-link"
         href={article.url}
@@ -49,7 +54,9 @@ function Articles({ article, articleSection }) {
       >
         <Box className="article-title" mt={3} mb={2}>
           <ThemeProvider theme={theme}>
-            <Typography variant="h5">{article.title}</Typography>
+            <Typography variant="h5" className="title">
+              {article.title}
+            </Typography>
           </ThemeProvider>
         </Box>
 
@@ -60,12 +67,8 @@ function Articles({ article, articleSection }) {
         </Box>
 
         <Box className="article-content" mb={4}>
-          <Box>
-            <img
-              className="article-content--img"
-              src={article.urlToImage}
-              alt=""
-            />
+          <Box className="article-content--img">
+            <img className="content-img" src={article.urlToImage} alt="" />
           </Box>
           <Box className="article-content--description">
             <ThemeProvider>
@@ -73,9 +76,9 @@ function Articles({ article, articleSection }) {
             </ThemeProvider>
           </Box>
         </Box>
-        <Divider />
+        <Divider className="divider" />
       </a>
-    </>
+    </Box>
   );
 }
 

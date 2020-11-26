@@ -2,17 +2,13 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
-// import Grid from '@material-ui/core/Grid';
 import Articles from './Articles/Articles';
-import MiddleArticles from './Articles/MiddleArticles';
-import TopArticlesLeft from './Articles/TopArticlesLeft';
-import TopArticlesRight from './Articles/TopArticlesRight';
 
 //=======material-ui css styles============//
 const useStyles = makeStyles((theme) => ({
   articlesFlex: {
     display: 'flex',
-    alignItems: 'flex-start',
+    alignItems: 'flex-end',
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -62,7 +58,7 @@ function Home() {
         <div className={`home-top-section--left ${classes.topSectionGridLeft}`}>
           {homeNews.slice(0, 1).map((article, index) => (
             <article key={index}>
-              <TopArticlesLeft article={article} />
+              <Articles article={article} articleSection="top-left" />
             </article>
           ))}
         </div>
@@ -71,7 +67,7 @@ function Home() {
         >
           {homeNews.slice(1, 7).map((article, index) => (
             <article key={index}>
-              <TopArticlesRight article={article} />
+              <Articles article={article} articleSection="top-right-articles" />
             </article>
           ))}
         </div>
@@ -79,7 +75,7 @@ function Home() {
       <section className={`home-middle-section ${classes.articlesFlex}`}>
         {homeNews.slice(7, 10).map((article, index) => (
           <article key={index}>
-            <MiddleArticles article={article} />
+            <Articles article={article} articleSection="middle" />
           </article>
         ))}
       </section>
