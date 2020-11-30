@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   topSectionGrid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(4, 1fr)',
-    gridGap: '1.3rem',
+    gridGap: '2rem',
     marginBottom: '1.5rem',
   },
   topSectionGridLeft: {
@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) => ({
     gridColumn: '4/4',
   },
   [theme.breakpoints.down('md')]: {
+    articlesFlex: {
+      marginBottom: '40px',
+    },
     topSectionGrid: {
       display: 'block',
     },
@@ -65,7 +68,7 @@ function Home() {
         <div
           className={` home-top-section--right${classes.topSectionGridRight}`}
         >
-          {homeNews.slice(1, 7).map((article, index) => (
+          {homeNews.slice(1, 8).map((article, index) => (
             <article key={index}>
               <Articles article={article} articleSection="top-right-articles" />
             </article>
@@ -73,7 +76,7 @@ function Home() {
         </div>
       </section>
       <section className={`home-middle-section ${classes.articlesFlex}`}>
-        {homeNews.slice(7, 10).map((article, index) => (
+        {homeNews.slice(8, 11).map((article, index) => (
           <article key={index}>
             <Articles article={article} articleSection="middle" />
           </article>
@@ -81,7 +84,7 @@ function Home() {
       </section>
       <Divider />
       <section className="home-bottom-section">
-        {homeNews.slice(10).map((article, index) => (
+        {homeNews.slice(11).map((article, index) => (
           <article key={index} className={classes.article}>
             <Articles article={article} articleSection="bottom" />
           </article>

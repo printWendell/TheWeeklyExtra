@@ -1,16 +1,12 @@
 /* =================left section articles================== */
-.top-left-articles {
-  background: black;
-}
-
 .top-left-articles > .article-link {
   display: flex;
   flex-direction: column-reverse;
 }
 
-.top-left-articles > .article-link > .article-title > .title {
-  color: white;
-  margin-left: 0.8rem;
+.top-left-articles > .article-link > .article-title > h2 {
+  margin-top: -10px;
+  margin-left: 0.9rem;
 }
 
 .top-left-articles > .article-link > .article-date {
@@ -41,10 +37,12 @@
 
 .top-right-articles > .article-link > .article-title {
   width: 20vw;
+  display: list-item;
+  list-style-type: disc;
 }
 
-.top-right-articles > .article-link > .article-title > .title {
-  font-size: 0.9rem;
+.top-right-articles > .article-link > .article-title > h3 {
+  font-size: 1rem;
 }
 
 .top-right-articles > .article-link > .article-date {
@@ -72,5 +70,15 @@
   }
   .top-right-articles > .article-link > .article-title {
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .top-right-articles > .article-link > .article-title {
+    display: block;
+  }
+
+  .top-right-articles > .article-link > .article-title > h3 {
+    font-size: 0.8rem;
   }
 }

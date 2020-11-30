@@ -1,29 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  createMuiTheme,
-  responsiveFontSizes,
-  ThemeProvider,
-} from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
-import Typography from '@material-ui/core/Typography';
 import './ArticleStyles/Articles.css';
-
-// variable for responsive fonts
-let theme = createMuiTheme();
-theme = responsiveFontSizes(theme);
-
-// change h5 object better responsiveness
-theme.typography.h5 = {
-  fontSize: '3rem',
-  '@media (min-width:600px)': {
-    fontSize: '1.5rem',
-  },
-  [theme.breakpoints.down('xs')]: {
-    fontSize: '1.1rem',
-  },
-};
 
 // =========Component==================== //
 function Articles({ article, articleSection }) {
@@ -53,27 +32,23 @@ function Articles({ article, articleSection }) {
         rel="noopener noreferrer"
       >
         <Box className="article-title" mt={3} mb={2}>
-          <ThemeProvider theme={theme}>
-            <Typography variant="h5" className="title">
-              {article.title}
-            </Typography>
-          </ThemeProvider>
+          {articleSection === 'top-left' ? (
+            <h2>{article.title}</h2>
+          ) : (
+            <h3>{article.title}</h3>
+          )}
         </Box>
 
         <Box className="article-date" mt={1} mb={1}>
-          <Typography variant="caption" gutterBottom>
-            {changeDate(article.publishedAt)}
-          </Typography>
+          <small>{changeDate(article.publishedAt)}</small>
         </Box>
 
-        <Box className="article-content" mb={4}>
+        <Box className="article-content">
           <Box className="article-content--img">
             <img className="content-img" src={article.urlToImage} alt="" />
           </Box>
           <Box className="article-content--description">
-            <ThemeProvider>
-              <Typography variant="body1">{article.description}</Typography>
-            </ThemeProvider>
+            <p>{article.description}</p>
           </Box>
         </Box>
         <Divider className="divider" />

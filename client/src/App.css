@@ -1,1 +1,30 @@
+* {
+  font-family: 'Montserrat', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+}
 
+h2 {
+  line-height: 2rem;
+  word-spacing: 0.2rem;
+}
+
+h3 {
+  word-spacing: 0.1rem;
+}
+
+@media screen and (max-width: 960px) {
+  h3 {
+    font-size: 1.1rem;
+  }
+  p {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  h2 {
+    font-size: 1.3rem;
+  }
+  h3 {
+    font-size: 0.9rem;
+  }
+}
