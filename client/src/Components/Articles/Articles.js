@@ -45,7 +45,12 @@ function Articles({ article, articleSection }) {
 
         <Box className="article-content">
           <Box className="article-content--img">
-            <img className="content-img" src={article.urlToImage} alt="" />
+            <img
+              className="content-img"
+              src={article.urlToImage}
+              alt=""
+              loading="lazy"
+            />
           </Box>
           <Box className="article-content--description">
             <p>{article.description}</p>
