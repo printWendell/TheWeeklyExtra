@@ -5,6 +5,7 @@ import Container from '@material-ui/core/Container';
 import Home from './Components/Home';
 import Navbar from './Components/Navbar/Navbar';
 import Categories from './Components/NewsCategories/Categories';
+import Results from './Components/SearchResults/Results';
 
 function App() {
   return (
@@ -38,6 +39,8 @@ function App() {
               path="/entertainment"
               component={() => <Categories category={'entertainment'} />}
             />
+            {/* search route */}
+            <Route exact path="/search/:search" component={Results} />
           </Switch>
         </Container>
       </Router>
