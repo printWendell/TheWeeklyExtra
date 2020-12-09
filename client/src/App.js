@@ -40,7 +40,7 @@ function App() {
               component={() => <Categories category={'entertainment'} />}
             />
             {/* search route */}
-            <Route exact path="/search/:search" component={Results} />
+            <Route exact path="/search" component={Results} />
           </Switch>
         </Container>
       </Router>

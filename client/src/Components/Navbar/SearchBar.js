@@ -68,7 +68,7 @@ function SearchBar({ resultsFor }) {
 
   function searchNews(e) {
     e.preventDefault();
-    window.location.assign(`/search/${search}/`);
+    window.location.assign(`/search?search=${search}`);
   }
 
   return (

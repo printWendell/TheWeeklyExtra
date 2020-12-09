@@ -1,18 +1,23 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { Box } from '@material-ui/core';
+import { Box, Divider } from '@material-ui/core';
 import SearchBar from '../Navbar/SearchBar';
+const queryString = require('query-string');
 
 import Articles from '../Articles/Articles';
+import ResultsPagination from './ResultsPagination';
 
-function Results({ match: { params } }) {
+function Results() {
   const [results, setResults] = useState([]);
-  console.log(params);
+
+  const query = queryString.parse(location.search);
+  console.log(query);
 
   useEffect(() => {
     async function getSearchResults() {
-      const res = await fetch(`/api/news/search/?search=${params.search}/`);
+      const res = await fetch(
+        `/api/news/search/?search=${query.search}&page=${query.page}`
+      );
       const data = await res.json();
       setResults(data.articles);
       console.log(data);
@@ -24,26 +29,22 @@ function Results({ match: { params } }) {
     <div className="results">
       <Box className="results-display" mt={4} mb={6}>
         <p>
-          Displaying results for <strong>{`"${params.search}"`}</strong>
+          Dispaying {(query.page || 1) * 10 - 9} -{10 * (query.page || 1)} out
+          of 100 for <strong>{`"${query.search}"`}</strong>
         </p>
-        <SearchBar resultsFor={params.search} />
-        {/* <Divider /> */}
+        <SearchBar resultsFor={query.search} />
       </Box>
-      <div className="results-articles">
+      <Divider />
+      <Box className="results-articles" mb={3}>
         {results.map((article, index) => (
           <article className="articles" key={index}>
             <Articles article={article} articleSection="bottom" />
           </article>
         ))}
-      </div>
+      </Box>
+      <ResultsPagination page={query.page} search={query.search} />
     </div>
   );
 }
-
-// PropTypes ensures that passed down props adhere to the type checking
-Results.propTypes = {
-  match: PropTypes.object,
-  params: PropTypes.string,
-};
 
 export default Results;
