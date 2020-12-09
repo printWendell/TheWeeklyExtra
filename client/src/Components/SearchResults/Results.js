@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet';
 import { useState, useEffect } from 'react';
 import { Box, Divider } from '@material-ui/core';
 import SearchBar from '../Navbar/SearchBar';
@@ -27,6 +28,12 @@ function Results() {
 
   return (
     <div className="results">
+      {/* Helmet Title */}
+      <Helmet>
+        <title>Search Results: {`'${query.search}'`} | TheWeeklyExtra</title>
+        <meta charSet="utf-8" />
+      </Helmet>
+
       <Box className="results-display" mt={4} mb={6}>
         <p>
           Dispaying {(query.page || 1) * 10 - 9} -{10 * (query.page || 1)} out

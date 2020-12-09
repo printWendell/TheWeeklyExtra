@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 import Articles from '../Articles/Articles';
 import { Divider } from '@material-ui/core';
@@ -18,9 +19,20 @@ function Categories({ category }) {
     getNewsCategory();
   }, []);
 
+  // function to capitalize category prop
+  function capitalizeString(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   return (
     <div>
-      <h1>{category}</h1>
+      {/* Helmet Title */}
+      <Helmet>
+        <title>{capitalizeString(category)} | TheWeeklyExtra</title>
+        <meta charSet="utf-8" />
+      </Helmet>
+
+      <h1>{capitalizeString(category)}</h1>
       <Divider />
       {news.map((article, index) => (
         <article key={index}>
