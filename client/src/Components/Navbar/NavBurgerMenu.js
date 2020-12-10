@@ -64,9 +64,11 @@ function NavBurgerMenu() {
   const [state, setState] = useState({ top: false });
 
   const toggleDrawer = (anchor, open) => (event) => {
+    // if user clicks on search bar don't call function
     if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
+      (event.type === 'keydown' &&
+        (event.key === 'Tab' || event.key === 'Shift')) ||
+      event.target.ariaLabel === 'search'
     ) {
       return;
     }
