@@ -7,55 +7,60 @@ const useStyles = makeStyles((theme) => ({
   pagination: {
     textAlign: 'center',
     '& li': {
-      padding: '10px',
+      paddingLeft: '15px',
+      paddingRight: '15px',
     },
     '& li > button': {
-      fontSize: '1rem',
+      fontSize: '1.2rem',
     },
   },
   [theme.breakpoints.down('md')]: {
     pagination: {
       '& li': {
-        padding: '7px',
+        paddingLeft: '10px',
+        paddingRight: '10px',
       },
     },
   },
   [theme.breakpoints.down('sm')]: {
     pagination: {
       '& li': {
-        padding: '5px',
-        marginLeft: '-10px',
+        paddingLeft: '8px',
+        paddingRight: '8px',
       },
       '& li > button': {
-        fontSize: '.9rem',
+        fontSize: '1rem',
       },
     },
   },
   [theme.breakpoints.down('xs')]: {
     pagination: {
       '& li': {
-        padding: '2px',
-        marginLeft: '-10px',
+        paddingLeft: '4px',
+        paddingRight: '4px',
+        marginLeft: '-13px',
       },
       '& li > button': {
-        fontSize: '.7rem',
+        fontSize: '.8rem',
       },
     },
   },
 }));
 
-function ResultsPagination({ page, search }) {
+function ResultsPagination({ page, search, sort }) {
   const classes = useStyles();
   const handleChange = (event, value) => {
     event.preventDefault();
     console.log(value);
-    location.assign(`/search?search=${search}&page=${value}`);
+    location.assign(
+      `/search?search=${search}&page=${value}&sort=${sort || 'relevancy'}`
+    );
   };
 
   return (
     <div>
       <Pagination
-        count={10}
+        count={5}
         page={page ? parseInt(page) : 1}
         onChange={handleChange}
         className={classes.pagination}
@@ -65,9 +70,9 @@ function ResultsPagination({ page, search }) {
 }
 
 ResultsPagination.propTypes = {
-  // query: PropTypes.object,
   page: PropTypes.string,
   search: PropTypes.string,
+  sort: PropTypes.string,
 };
 
 export default ResultsPagination;

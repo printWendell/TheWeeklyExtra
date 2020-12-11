@@ -7,17 +7,17 @@ const queryString = require('query-string');
 
 import Articles from '../Articles/Articles';
 import ResultsPagination from './ResultsPagination';
+import SortResults from './SortResults';
 
 function Results() {
   const [results, setResults] = useState([]);
 
   const query = queryString.parse(location.search);
-  console.log(query);
 
   useEffect(() => {
     async function getSearchResults() {
       const res = await fetch(
-        `/api/news/search/?search=${query.search}&page=${query.page}`
+        `/api/news/search/?search=${query.search}&sort=${query.sort}&page=${query.page}`
       );
       const data = await res.json();
       setResults(data.articles);
@@ -34,13 +34,16 @@ function Results() {
         <meta charSet="utf-8" />
       </Helmet>
 
-      <Box className="results-display" mt={4} mb={6}>
+      <Box className="results-display" mt={4} mb={4}>
         <p>
-          Dispaying {(query.page || 1) * 10 - 9} -{10 * (query.page || 1)} out
+          Dispaying {(query.page || 1) * 20 - 19} -{20 * (query.page || 1)} out
           of 100 for <strong>{`"${query.search}"`}</strong>
         </p>
         <SearchBar resultsFor={query.search} />
       </Box>
+
+      <SortResults page={query.page} search={query.search} sort={query.sort} />
+
       <Divider />
       <Box className="results-articles" mb={3}>
         {results.map((article, index) => (
@@ -49,7 +52,11 @@ function Results() {
           </article>
         ))}
       </Box>
-      <ResultsPagination page={query.page} search={query.search} />
+      <ResultsPagination
+        page={query.page}
+        search={query.search}
+        sort={query.sort}
+      />
     </div>
   );
 }
