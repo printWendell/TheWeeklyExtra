@@ -2,7 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const articleController = require("../controllers/articleController");
+const { requireAuth } = require("../middleware/authMiddleware");
 
-router.get("/", articleController.get_saved_articles);
+// protect route
+router.get("/", requireAuth, articleController.get_saved_articles);
 
 module.exports = router;
