@@ -31,6 +31,9 @@ const Article = db.define("article", {
   img_url: {
     type: Sequelize.STRING,
   },
+  source: {
+    type: Sequelize.STRING(10),
+  },
   user_id: {
     type: Sequelize.INTEGER,
     references: {
