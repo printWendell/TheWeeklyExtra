@@ -30,7 +30,7 @@ module.exports.post_save_articles = async (req, res, next) => {
 
     // check if user already saved article
     const articleExists = await Article.findOne({
-      where: { link_url: article.link_url },
+      where: { link_url: article.link_url, user_id: user_id },
     });
 
     if (articleExists) {
@@ -39,6 +39,30 @@ module.exports.post_save_articles = async (req, res, next) => {
       const savedArticle = await Article.create(article);
       res.status(201).send(savedArticle);
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.delete_saved_articles = async (req, res, next) => {
+  try {
+    const results = req.body;
+
+    // find user id
+    const findUser = await User.findOne({ where: { email: results.email } });
+    const user_id = findUser.id;
+
+    // find article to delete using results url and user id
+    const savedArticle = await Article.destroy({
+      where: { link_url: results.link_url, user_id: user_id },
+    });
+
+    if (!savedArticle) throw createError.NotFound("Article Not Found");
+    await Article.destroy({
+      where: { link_url: results.link_url, user_id: user_id },
+    });
+
+    res.status(204).send({ savedArticle });
   } catch (error) {
     next(error);
   }
