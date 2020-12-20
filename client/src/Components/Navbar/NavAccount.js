@@ -4,12 +4,23 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import NavDialogBoxContent from './NavbarDialogBox/NavDialogBoxContent';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+  accountIcon: {
+    '& svg': {
+      color: 'white',
+    },
+  },
+}));
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
 });
 
 function NavAccount() {
+  const classes = useStyles();
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -21,7 +32,7 @@ function NavAccount() {
   };
   return (
     <span>
-      <IconButton onClick={handleClickOpen}>
+      <IconButton onClick={handleClickOpen} className={classes.accountIcon}>
         <AccountCircle />
       </IconButton>
       <Dialog
