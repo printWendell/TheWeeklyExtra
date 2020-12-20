@@ -35,7 +35,7 @@ app.use(async (req, res, next) => {
 });
 
 // error handler
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.send({
     error: {

@@ -1,10 +1,41 @@
 import React from 'react';
+import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import Dialog from '@material-ui/core/Dialog';
+import Slide from '@material-ui/core/Slide';
+import NavDialogBoxContent from './NavbarDialogBox/NavDialogBoxContent';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="down" ref={ref} {...props} />;
+});
 
 function NavAccount() {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <span>
-      <AccountCircle />
+      <IconButton onClick={handleClickOpen}>
+        <AccountCircle />
+      </IconButton>
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-slide-title"
+        aria-describedby="alert-dialog-slide-description"
+        fullWidth={true}
+        maxWidth="sm"
+      >
+        <NavDialogBoxContent handleClose={handleClose} />
+      </Dialog>
     </span>
   );
 }

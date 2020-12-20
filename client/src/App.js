@@ -7,6 +7,10 @@ import Home from './Components/Home';
 import Navbar from './Components/Navbar/Navbar';
 import Categories from './Components/NewsCategories/Categories';
 import Results from './Components/SearchResults/Results';
+import Register from './Components/Register/Register';
+import Login from './Components/Register/Login';
+import Terms from './Components/Register/Terms';
+import PrivacyPolicy from './Components/Register/PrivacyPolicy';
 
 function App() {
   return (
@@ -52,6 +56,10 @@ function App() {
             />
             {/* search route */}
             <Route exact path="/search" component={Results} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/terms" component={Terms} />
+            <Route exact path="/privacy" component={PrivacyPolicy} />
           </Switch>
         </Container>
       </Router>
