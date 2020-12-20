@@ -1,13 +1,53 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import PasswordInputs from './RegisterFormInputs/PasswordInputs';
 import TextInputs from './RegisterFormInputs/TextInputs';
+import { Box } from '@material-ui/core';
+import { fade, makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  registerLink: {
+    textDecoration: 'none',
+    '&:hover': {
+      color: fade(theme.palette.error.light, 0.85),
+    },
+  },
+  registerCheckBox: {
+    width: '65%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  },
+  registerButton: {
+    backgroundColor: '#2E3B55',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: '#E8F0FE',
+      color: '#2E3B55',
+    },
+  },
+
+  registerError: {
+    color: '#ff1744',
+    fontWeight: 'bold',
+  },
+
+  [theme.breakpoints.down('xs')]: {
+    registerTitle: {
+      fontSize: 'calc(1rem + 1vw)',
+    },
+    registerCheckBox: {
+      width: '100%',
+      fontSize: 'calc(.6rem + 1vw)',
+    },
+  },
+}));
 
 function register() {
+  const classes = useStyles();
+
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -32,7 +72,6 @@ function register() {
 
   function registerUsers(e) {
     e.preventDefault();
-    // console.log({ username, email, password });
     if (checked === true) {
       try {
         fetch(`api/auth/signup`, {
@@ -54,49 +93,66 @@ function register() {
   }
   if (redirect) window.location.assign('/');
   return (
-    <div className="register">
-      <AccountCircle />
-      <h1>Create A TheWeeklyExtra Account</h1>
-      <p>
-        Already have an account?{' '}
-        <strong>{<Link to="/login">Log In</Link>}</strong>
-      </p>
-      <form action="">
-        <div className="form-username" onChange={handleFormChange}>
+    <Box className="register" textAlign="center" mt={6}>
+      <Box mb={5}>
+        <h1 className={classes.registerTitle}>
+          Create A TheWeeklyExtra Account
+        </h1>
+        <p>
+          Already have an account?{' '}
+          <strong>
+            {
+              <Link to="/login" className={classes.registerLink}>
+                Log In
+              </Link>
+            }
+          </strong>
+        </p>
+      </Box>
+      <form action="" className="register-form">
+        <Box className="form-username" onChange={handleFormChange} mb={5}>
           <TextInputs type="text" label="Username" name="username" />
-        </div>
+        </Box>
 
-        <div className="form-email" onChange={handleFormChange}>
+        <Box className="form-email" onChange={handleFormChange} mb={5}>
           <TextInputs type="email" label="Email" name="email" />
-        </div>
+        </Box>
 
-        <div className="form-password" onChange={handleFormChange}>
+        <Box className="form-password" onChange={handleFormChange} mb={5}>
           <PasswordInputs />
-        </div>
+        </Box>
 
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={checked}
-              onChange={handleCheckBox}
-              name="check"
-            />
-          }
-        />
-        <span>
+        <Box className={classes.registerCheckBox} mb={4}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={checked}
+                onChange={handleCheckBox}
+                name="check"
+              />
+            }
+          />
           By creating this account, I agree to the {''}
           {<Link to="/terms">Terms of Use</Link>} and acknowledge that I have
           definitely {`"read"`} the {<Link to="/privacy">Privacy Policy</Link>}
-        </span>
+        </Box>
 
-        <div className="form-btn">
-          <Button variant="outlined" color="primary" onClick={registerUsers}>
+        <Box className="form-btn" mb={4}>
+          <Button
+            variant="outlined"
+            className={classes.registerButton}
+            onClick={registerUsers}
+          >
             Sign Up
           </Button>
-        </div>
-        {errMessage ? <p>{errMessage}</p> : <p> </p>}
+        </Box>
+        {errMessage ? (
+          <p className={classes.registerError}>{errMessage}</p>
+        ) : (
+          <p> </p>
+        )}
       </form>
-    </div>
+    </Box>
   );
 }
 

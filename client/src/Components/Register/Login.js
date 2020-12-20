@@ -1,12 +1,41 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 import Button from '@material-ui/core/Button';
 import PasswordInputs from './RegisterFormInputs/PasswordInputs';
 import TextInputs from './RegisterFormInputs/TextInputs';
+import { fade, makeStyles } from '@material-ui/core/styles';
+import { Box } from '@material-ui/core';
+
+const useStyles = makeStyles((theme) => ({
+  loginLink: {
+    textDecoration: 'none',
+    '&:hover': {
+      color: fade(theme.palette.error.light, 0.85),
+    },
+  },
+  loginButton: {
+    backgroundColor: '#2E3B55',
+    color: 'white',
+    '&:hover': {
+      backgroundColor: '#E8F0FE',
+      color: '#2E3B55',
+    },
+  },
+  loginError: {
+    color: '#ff1744',
+    fontWeight: 'bold',
+  },
+  [theme.breakpoints.down('xs')]: {
+    loginTitle: {
+      fontSize: 'calc(1rem + 1vw)',
+    },
+  },
+}));
 
 function Login() {
+  const classes = useStyles();
+  console.log(classes);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [errMessage, setErrMessage] = useState([]);
@@ -43,33 +72,46 @@ function Login() {
   if (redirect) window.location.assign('/');
 
   return (
-    <div className="login">
-      <AccountCircle />
-      <h1>WX</h1>
-      <p>
-        Don't have an account?{' '}
-        <strong>{<Link to="/register">Sign Up</Link>}</strong>
-      </p>
-      <form action="">
-        <div className="form-email" onChange={handleFormChange}>
+    <Box className="login" textAlign="center" mt={6}>
+      <Box mb={5}>
+        <h1 className={classes.loginTitle}>WX</h1>
+        <p>
+          Don't have an account?{' '}
+          <strong>
+            {
+              <Link to="/register" className={classes.loginLink}>
+                Sign Up
+              </Link>
+            }
+          </strong>
+        </p>
+      </Box>
+      <form action="" className="login-form">
+        <Box className="form-email" onChange={handleFormChange} mb={3}>
           <TextInputs type="email" label="Email" name="email" />
-        </div>
+        </Box>
 
-        <div className="form-password" onChange={handleFormChange}>
+        <Box className="form-password" onChange={handleFormChange} mb={3}>
           <PasswordInputs />
-        </div>
-        <div className="form-btn">
-          <Button variant="outlined" color="primary" onClick={registerUsers}>
-            Login
-          </Button>
+        </Box>
+        <Box className="form-btn">
+          <Box mb={3}>
+            <Button
+              variant="outlined"
+              className={classes.loginButton}
+              onClick={registerUsers}
+            >
+              Login
+            </Button>
+          </Box>
           {errMessage ? (
-            <p className="has-text-danger">{errMessage}</p>
+            <p className={classes.loginError}>{errMessage}</p>
           ) : (
             <p> </p>
           )}
-        </div>
+        </Box>
       </form>
-    </div>
+    </Box>
   );
 }
 
