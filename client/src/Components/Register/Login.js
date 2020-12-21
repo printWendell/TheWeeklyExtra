@@ -62,9 +62,7 @@ function Login() {
         .then((res) => res.json())
         .then((data) => {
           console.log(data);
-          data.error & (data.error.status !== 500)
-            ? setErrMessage(data.error.message)
-            : setRedirect(true);
+          data.error ? setErrMessage(data.error.message) : setRedirect(true);
         });
     } catch (error) {
       console.log(error);

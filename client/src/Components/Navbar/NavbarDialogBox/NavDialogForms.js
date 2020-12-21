@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import TextInputs from '../../Register/RegisterFormInputs/TextInputs';
 import PasswordInputs from '../../Register/RegisterFormInputs/PasswordInputs';
 import { Box } from '@material-ui/core';
@@ -70,13 +70,13 @@ function NavDialogForms() {
         </Box>
 
         <Box className="form-btn" mb={2}>
-          <Button
+          <button
             variant="outlined"
             className={classes.dialogButton}
-            onClick={loginUser}
+            // onClick={loginUser}
           >
             Login
-          </Button>
+          </button>
         </Box>
         {errMessage ? (
           <p className={classes.dialogError}>{errMessage}</p>

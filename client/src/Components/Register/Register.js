@@ -83,7 +83,7 @@ function register() {
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
-            data.error & (data.error.status !== 500)
+            data.error & data.error.status
               ? setErrMessage(data.error.message)
               : setRedirect(true);
           });
