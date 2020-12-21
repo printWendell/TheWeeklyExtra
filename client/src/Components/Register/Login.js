@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-// import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button';
 import PasswordInputs from './RegisterFormInputs/PasswordInputs';
 import TextInputs from './RegisterFormInputs/TextInputs';
 import { fade, makeStyles } from '@material-ui/core/styles';
@@ -96,9 +96,13 @@ function Login() {
         </Box>
         <Box className="form-btn">
           <Box mb={3}>
-            <button variant="outlined" className={classes.loginButton}>
+            <Button
+              variant="outlined"
+              className={classes.loginButton}
+              type="submit"
+            >
               Login
-            </button>
+            </Button>
           </Box>
           {errMessage ? (
             <p className={classes.loginError}>{errMessage}</p>
