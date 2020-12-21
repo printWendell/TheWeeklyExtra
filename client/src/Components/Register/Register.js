@@ -81,9 +81,10 @@ function register() {
           credentials: 'include',
         })
           .then((res) => res.json())
-          .then((data) =>
-            data.error ? setErrMessage(data.error.message) : setRedirect(true)
-          );
+          .then((data) => {
+            console.log(data);
+            data.error ? setErrMessage(data.error.message) : setRedirect(true);
+          });
       } catch (error) {
         console.log(error);
       }

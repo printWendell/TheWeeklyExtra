@@ -35,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Login() {
   const classes = useStyles();
-  console.log(classes);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [errMessage, setErrMessage] = useState([]);
@@ -62,6 +61,7 @@ function Login() {
       })
         .then((res) => res.json())
         .then((data) => {
+          console.log(data);
           data.error ? setErrMessage(data.error.message) : setRedirect(true);
         });
     } catch (error) {
