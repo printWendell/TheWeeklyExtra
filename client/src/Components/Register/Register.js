@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import PasswordInputs from './RegisterFormInputs/PasswordInputs';
 import TextInputs from './RegisterFormInputs/TextInputs';
 import { Box } from '@material-ui/core';
@@ -112,7 +112,7 @@ function register() {
           </strong>
         </p>
       </Box>
-      <form action="" className="register-form">
+      <form action="" className="register-form" onSubmit={registerUsers}>
         <Box className="form-username" onChange={handleFormChange} mb={5}>
           <TextInputs type="text" label="Username" name="username" />
         </Box>
@@ -141,13 +141,9 @@ function register() {
         </Box>
 
         <Box className="form-btn" mb={4}>
-          <Button
-            variant="outlined"
-            className={classes.registerButton}
-            onClick={registerUsers}
-          >
+          <button variant="outlined" className={classes.registerButton}>
             Sign Up
-          </Button>
+          </button>
         </Box>
         {errMessage ? (
           <p className={classes.registerError}>{errMessage}</p>
