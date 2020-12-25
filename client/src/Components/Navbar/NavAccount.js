@@ -1,12 +1,18 @@
 import React from 'react';
+import Cookie from 'js-cookie';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Dialog from '@material-ui/core/Dialog';
 import Slide from '@material-ui/core/Slide';
 import NavDialogBoxContent from './NavbarDialogBox/NavDialogBoxContent';
+import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
+import { cookieStrToObj } from '../../Helpers/functions';
 
 const useStyles = makeStyles(() => ({
+  loggedIcon: {
+    backgroundColor: '#8D91A4',
+  },
   accountIcon: {
     '& svg': {
       color: 'white',
@@ -21,6 +27,10 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 function NavAccount() {
   const classes = useStyles();
 
+  // user from cookie
+  const cookie = Cookie.get('user');
+  const user = cookieStrToObj(cookie);
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -33,7 +43,11 @@ function NavAccount() {
   return (
     <span>
       <IconButton onClick={handleClickOpen} className={classes.accountIcon}>
-        <AccountCircle />
+        {user.name ? (
+          <Avatar className={classes.loggedIcon}>{user.name.charAt(0)}</Avatar>
+        ) : (
+          <AccountCircle />
+        )}
       </IconButton>
       <Dialog
         open={open}
