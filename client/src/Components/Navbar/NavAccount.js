@@ -9,13 +9,22 @@ import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import { cookieStrToObj } from '../../Helpers/functions';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   loggedIcon: {
     backgroundColor: '#8D91A4',
+    fontSize: '1.3rem',
   },
   accountIcon: {
     '& svg': {
       color: 'white',
+    },
+  },
+
+  [theme.breakpoints.down('xs')]: {
+    loggedIcon: {
+      fontSize: '1.2rem',
+      height: '35px',
+      width: '35px',
     },
   },
 }));
