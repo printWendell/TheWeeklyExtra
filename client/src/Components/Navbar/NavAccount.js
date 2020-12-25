@@ -8,6 +8,7 @@ import NavDialogBoxContent from './NavbarDialogBox/NavDialogBoxContent';
 import Avatar from '@material-ui/core/Avatar';
 import { makeStyles } from '@material-ui/core/styles';
 import { cookieStrToObj } from '../../Helpers/functions';
+import LoggedInMenu from './NavbarLoggedInMenu/LoggedInMenu';
 
 const useStyles = makeStyles((theme) => ({
   loggedIcon: {
@@ -40,36 +41,58 @@ function NavAccount() {
   const cookie = Cookie.get('user');
   const user = cookieStrToObj(cookie);
 
+  // state for logged out dialog menu
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
+  // state for logged in menu box
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  //========== dialog menu functions==================
+  const handleOpenDialog = () => {
     setOpen(true);
   };
 
-  const handleClose = () => {
+  const handleCloseDialog = () => {
     setOpen(false);
   };
+
+  // =========logged in menu functions==================
+  const handleClickMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <span>
-      <IconButton onClick={handleClickOpen} className={classes.accountIcon}>
+      <IconButton
+        onClick={user.name ? handleClickMenu : handleOpenDialog}
+        className={classes.accountIcon}
+      >
         {user.name ? (
           <Avatar className={classes.loggedIcon}>{user.name.charAt(0)}</Avatar>
         ) : (
           <AccountCircle />
         )}
       </IconButton>
-      <Dialog
-        open={open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-        fullWidth={true}
-        maxWidth="sm"
-      >
-        <NavDialogBoxContent handleClose={handleClose} />
-      </Dialog>
+      {user.name ? (
+        <LoggedInMenu anchorEl={anchorEl} handleCloseMenu={handleCloseMenu} />
+      ) : (
+        <Dialog
+          open={open}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleCloseDialog}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+          fullWidth={true}
+          maxWidth="sm"
+        >
+          <NavDialogBoxContent handleClose={handleCloseDialog} />
+        </Dialog>
+      )}
     </span>
   );
 }
