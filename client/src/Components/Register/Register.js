@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
@@ -82,10 +82,7 @@ function register() {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
-            data.error & data.error.status
-              ? setErrMessage(data.error.message)
-              : setRedirect(true);
+            data.error ? setErrMessage(data.error.message) : setRedirect(true);
           });
       } catch (error) {
         console.log(error);
@@ -94,7 +91,7 @@ function register() {
       setErrMessage('Please indicate that you accept the Terms and Conditions');
     }
   }
-  if (redirect) window.location.assign('/');
+  if (redirect) return <Redirect to="/profile" />;
   return (
     <Box className="register" textAlign="center" mt={6}>
       <Box mb={5}>

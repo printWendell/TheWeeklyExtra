@@ -11,6 +11,7 @@ import Register from './Components/Register/Register';
 import Login from './Components/Register/Login';
 import Terms from './Components/Register/Terms';
 import PrivacyPolicy from './Components/Register/PrivacyPolicy';
+import Profile from './Components/Profile/Profile';
 
 function App() {
   return (
@@ -60,6 +61,9 @@ function App() {
             <Route exact path="/login" component={Login} />
             <Route exact path="/terms" component={Terms} />
             <Route exact path="/privacy" component={PrivacyPolicy} />
+
+            {/* account routes */}
+            <Route exact path="/profile" component={Profile} />
           </Switch>
         </Container>
       </Router>
