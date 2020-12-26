@@ -70,7 +70,10 @@ module.exports.login_post = async (req, res, next) => {
 
 module.exports.logout_get = (req, res, next) => {
   const token = "";
+  const user = "";
   res.cookie("jwt", token, { maxAge: ms("1s") });
+  res.cookie("user", user, { maxAge: ms("1s") });
   res.clearCookie("jwt");
-  res.status(200).send({ token });
+  res.clearCookie("user");
+  res.status(200).send({ token, user });
 };

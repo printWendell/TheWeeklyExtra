@@ -1,6 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react';
-import { Redirect } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import PasswordInputs from './RegisterFormInputs/PasswordInputs';
@@ -69,7 +68,7 @@ function Login() {
     }
   }
 
-  if (redirect) return <Redirect to="/profile" />;
+  if (redirect) window.location.assign('/');
 
   return (
     <Box className="login" textAlign="center" mt={6}>

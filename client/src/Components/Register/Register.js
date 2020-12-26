@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
@@ -91,7 +91,7 @@ function register() {
       setErrMessage('Please indicate that you accept the Terms and Conditions');
     }
   }
-  if (redirect) return <Redirect to="/profile" />;
+  if (redirect) window.location.assign('/');
   return (
     <Box className="register" textAlign="center" mt={6}>
       <Box mb={5}>

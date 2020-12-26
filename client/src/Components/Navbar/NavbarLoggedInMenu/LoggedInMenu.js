@@ -43,6 +43,14 @@ function LoggedInMenu(props) {
   const cookie = Cookie.get('user');
   const user = cookieStrToObj(cookie);
 
+  function logoutUser() {
+    try {
+      fetch('/api/auth/logout').then(window.location.assign('/'));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div>
       <Menu
@@ -69,7 +77,7 @@ function LoggedInMenu(props) {
             Profile
           </MenuItem>
         </Link>
-        <MenuItem className={classes.menuLinkItem}>
+        <MenuItem onClick={logoutUser} className={classes.menuLinkItem}>
           <ExitToAppIcon />
           Logout
         </MenuItem>
