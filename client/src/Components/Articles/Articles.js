@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
+// import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import './ArticleStyles/Articles.css';
+import ArticleSaveBtn from './SaveArticles/ArticleSaveBtn';
 
 // =========Component==================== //
 function Articles({ article, articleSection }) {
@@ -11,7 +13,6 @@ function Articles({ article, articleSection }) {
     const utcDate = new Date(`${date}`);
     return utcDate.toDateString();
   }
-  console.log(articleSection);
 
   return (
     <Box
@@ -33,14 +34,24 @@ function Articles({ article, articleSection }) {
       >
         <Box className="article-title" mt={3} mb={2}>
           {articleSection === 'top-left' ? (
-            <h2>{article.title}</h2>
+            <h2>
+              {article.title}{' '}
+              <span className="article-saveBtn">
+                <ArticleSaveBtn article={article} />
+              </span>
+            </h2>
           ) : (
-            <h3>{article.title}</h3>
+            <h3>
+              {article.title}{' '}
+              <span className="article-saveBtn">
+                <ArticleSaveBtn article={article} />
+              </span>
+            </h3>
           )}
         </Box>
 
         <Box className="article-date" mt={1} mb={1}>
-          <small>{changeDate(article.publishedAt)}</small>
+          <small>{changeDate(article.publishedAt)} </small>
         </Box>
 
         <Box className="article-content">

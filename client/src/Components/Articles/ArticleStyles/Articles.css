@@ -11,10 +11,26 @@
   text-decoration: underline;
 }
 
+/* save button styles */
+.article-title .article-saveBtn {
+  visibility: hidden;
+}
+
+.article-link:hover > .article-title .article-saveBtn {
+  visibility: visible;
+}
+.article-saveBtn > button {
+  margin-bottom: -1.3rem;
+  margin-top: -1.3rem;
+}
+
+.article-saveBtn .saved {
+  visibility: visible;
+}
+
 .article-date {
   color: #37474f;
 }
-
 /* ================middle articles============== */
 
 .middle-articles > .article-link > .article-title {
