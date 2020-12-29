@@ -16,10 +16,11 @@
   visibility: hidden;
 }
 
-.article-link:hover > .article-title .article-saveBtn {
+.article-link:hover > .article-title .article-saveBtn,
+.article-saveBtn-menu {
   visibility: visible;
 }
-.article-saveBtn > button {
+.articleBtn {
   margin-bottom: -1.3rem;
   margin-top: -1.3rem;
 }
