@@ -22,6 +22,8 @@ function ArticleSaveBtn({ article }) {
   const [saved, setSaved] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
+  let snackbarMessage = '';
+
   // remove 't' and 'z' from published date to save to sql
   const articleTime = new Date(article.publishedAt);
   const savedArticleTime = articleTime
@@ -32,32 +34,52 @@ function ArticleSaveBtn({ article }) {
   // post article to save article route
   const saveArticle = (e) => {
     e.preventDefault();
-    setSaved(true);
-    if (user.email) {
-      const email = user.email;
-      try {
-        fetch('/api/articles/save', {
-          method: 'POST',
-          body: JSON.stringify({
-            email,
-            author: article.author,
-            title: article.title,
-            description: article.description,
-            published_at: savedArticleTime,
-            link_url: article.url,
-            img_url: article.urlToImage,
-            source: article.source.name,
-          }),
-          headers: { 'Content-Type': 'application/json' },
-          credentials: 'include',
-        })
-          .then((res) => res.json())
-          .then((data) => console.log(data));
-      } catch (error) {
-        setSaved(false);
+    setSaved(!saved);
+    const email = user.email;
+    if (saved === false) {
+      if (user.email) {
+        snackbarMessage = 'Article saved to profile';
+        try {
+          fetch('/api/articles/save', {
+            method: 'POST',
+            body: JSON.stringify({
+              email,
+              author: article.author,
+              title: article.title,
+              description: article.description,
+              published_at: savedArticleTime,
+              link_url: article.url,
+              img_url: article.urlToImage,
+              source: article.source.name,
+            }),
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+          });
+        } catch (error) {
+          setSaved(false);
+        }
+      } else {
+        history.push('/login');
       }
-    } else {
-      history.push('/login');
+    } else if (saved === true) {
+      snackbarMessage = 'Article removed from profile';
+
+      // delete article route
+      if (user.email) {
+        try {
+          fetch('/api/articles/delete', {
+            method: 'DELETE',
+            body: JSON.stringify({
+              email,
+              link_url: article.url,
+            }),
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
     }
   };
 
@@ -80,7 +102,7 @@ function ArticleSaveBtn({ article }) {
       <div className="article-saveBtn-snackbar">
         <p className="snackbar">
           <CheckCircleIcon className="snackbar-icon" />
-          Article saved to profile
+          {snackbarMessage}
         </p>
       </div>
     );
@@ -88,12 +110,10 @@ function ArticleSaveBtn({ article }) {
 
   function saveArticleAndOpenSnackBar(e) {
     saveArticle(e);
-    if (saved === false) {
-      if (user.email) {
-        OpenSnackbar(e);
-      } else {
-        history.push('/login');
-      }
+    if (user.email) {
+      OpenSnackbar(e);
+    } else {
+      history.push('/login');
     }
   }
 
