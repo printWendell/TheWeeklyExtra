@@ -29,6 +29,20 @@
   visibility: visible;
 }
 
+.snackbar {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.snackbar > .snackbar-icon {
+  margin-right: 0.5rem;
+  margin-left: 1.7rem;
+}
+
 .article-date {
   color: #37474f;
 }

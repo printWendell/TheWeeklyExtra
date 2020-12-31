@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import BookmarkIcon from '@material-ui/icons/Bookmark';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Cookie from 'js-cookie';
 import { useHistory } from 'react-router-dom';
 import { cookieStrToObj } from '../../../Helpers/functions';
@@ -10,6 +12,7 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Hidden from '@material-ui/core/Hidden';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { useSnackbar } from 'notistack';
 
 function ArticleSaveBtn({ article }) {
   const cookie = Cookie.get('user');
@@ -23,16 +26,36 @@ function ArticleSaveBtn({ article }) {
   const articleTime = new Date(article.publishedAt);
   const savedArticleTime = articleTime
     .toISOString()
-    .replace('Z', ' ')
+    .replace('Z', '')
     .replace('T', ' ');
 
   // post article to save article route
-  const getData = (e) => {
+  const saveArticle = (e) => {
     e.preventDefault();
+    setSaved(true);
     if (user.email) {
-      console.log(article);
-      console.log(savedArticleTime);
-      setSaved(!saved);
+      const email = user.email;
+      try {
+        fetch('/api/articles/save', {
+          method: 'POST',
+          body: JSON.stringify({
+            email,
+            author: article.author,
+            title: article.title,
+            description: article.description,
+            published_at: savedArticleTime,
+            link_url: article.url,
+            img_url: article.urlToImage,
+            source: article.source.name,
+          }),
+          headers: { 'Content-Type': 'application/json' },
+          credentials: 'include',
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data));
+      } catch (error) {
+        setSaved(false);
+      }
     } else {
       history.push('/login');
     }
@@ -48,12 +71,38 @@ function ArticleSaveBtn({ article }) {
     setAnchorEl(null);
   };
 
+  // snackbar functions
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  const OpenSnackbar = (e) => {
+    e.preventDefault();
+    enqueueSnackbar(
+      <div className="article-saveBtn-snackbar">
+        <p className="snackbar">
+          <CheckCircleIcon className="snackbar-icon" />
+          Article saved to profile
+        </p>
+      </div>
+    );
+  };
+
+  function saveArticleAndOpenSnackBar(e) {
+    saveArticle(e);
+    if (saved === false) {
+      if (user.email) {
+        OpenSnackbar(e);
+      } else {
+        history.push('/login');
+      }
+    }
+  }
+
   return (
     <span>
       <Hidden smDown>
-        <IconButton onClick={getData}>
+        <IconButton onClick={saveArticleAndOpenSnackBar}>
           {saved ? (
-            <BookmarkIcon className=" saved articleBtn" />
+            <BookmarkIcon className="saved articleBtn" />
           ) : (
             <BookmarkBorderIcon className="unsaved articleBtn" />
           )}
@@ -77,9 +126,9 @@ function ArticleSaveBtn({ article }) {
           onClose={handleClose}
         >
           <MenuItem onClick={handleClose}>
-            <IconButton onClick={getData}>
+            <IconButton onClick={saveArticleAndOpenSnackBar}>
               {saved ? (
-                <BookmarkIcon className="saved " />
+                <BookmarkIcon className="saved" />
               ) : (
                 <BookmarkBorderIcon className="unsaved " />
               )}
