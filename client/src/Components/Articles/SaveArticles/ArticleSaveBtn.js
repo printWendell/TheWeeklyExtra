@@ -7,7 +7,11 @@ import BookmarkIcon from '@material-ui/icons/Bookmark';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import Cookie from 'js-cookie';
 import { useHistory } from 'react-router-dom';
-import { cookieStrToObj } from '../../../Helpers/functions';
+import {
+  cookieStrToObj,
+  saveUserArticle,
+  deleteSavedArticles,
+} from '../../../Helpers/functions';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Hidden from '@material-ui/core/Hidden';
 import Menu from '@material-ui/core/Menu';
@@ -32,31 +36,18 @@ function ArticleSaveBtn({ article }) {
     .replace('T', ' ');
 
   // post article to save article route
-  const saveArticle = (e) => {
+  const handleSavedArticle = async (e) => {
     e.preventDefault();
     setSaved(!saved);
     const email = user.email;
     if (saved === false) {
+      // save article route
       if (user.email) {
         snackbarMessage = 'Article saved to profile';
         try {
-          fetch('/api/articles/save', {
-            method: 'POST',
-            body: JSON.stringify({
-              email,
-              author: article.author,
-              title: article.title,
-              description: article.description,
-              published_at: savedArticleTime,
-              link_url: article.url,
-              img_url: article.urlToImage,
-              source: article.source.name,
-            }),
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-          });
+          saveUserArticle(email, article, savedArticleTime);
         } catch (error) {
-          setSaved(false);
+          console.log(error);
         }
       } else {
         history.push('/login');
@@ -67,15 +58,7 @@ function ArticleSaveBtn({ article }) {
       // delete article route
       if (user.email) {
         try {
-          fetch('/api/articles/delete', {
-            method: 'DELETE',
-            body: JSON.stringify({
-              email,
-              link_url: article.url,
-            }),
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-          });
+          deleteSavedArticles(email, article.url);
         } catch (error) {
           console.log(error);
         }
@@ -108,8 +91,8 @@ function ArticleSaveBtn({ article }) {
     );
   };
 
-  function saveArticleAndOpenSnackBar(e) {
-    saveArticle(e);
+  function handleSavedArticleAndOpenSnackBar(e) {
+    handleSavedArticle(e);
     if (user.email) {
       OpenSnackbar(e);
     } else {
@@ -120,7 +103,7 @@ function ArticleSaveBtn({ article }) {
   return (
     <span>
       <Hidden smDown>
-        <IconButton onClick={saveArticleAndOpenSnackBar}>
+        <IconButton onClick={handleSavedArticleAndOpenSnackBar}>
           {saved ? (
             <BookmarkIcon className="saved articleBtn" />
           ) : (
@@ -146,7 +129,7 @@ function ArticleSaveBtn({ article }) {
           onClose={handleClose}
         >
           <MenuItem onClick={handleClose}>
-            <IconButton onClick={saveArticleAndOpenSnackBar}>
+            <IconButton onClick={handleSavedArticleAndOpenSnackBar}>
               {saved ? (
                 <BookmarkIcon className="saved" />
               ) : (
