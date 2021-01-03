@@ -22,6 +22,11 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(15),
     fontSize: theme.spacing(8),
   },
+  profileArticles_Article: {
+    // display: 'flex',
+    // flexDirection: 'row',
+    // justifyContent: 'space-between',
+  },
   [theme.breakpoints.down('xs')]: {
     profileUser: {
       background: 'linear-gradient(to bottom, #8D91A4, #8D91A4 60%, white 40%)',
@@ -65,6 +70,11 @@ function Profile() {
 
   useEffect(() => {
     getSavedArticles().then((data) => setArticles(data));
+    // console.log(document.getElementsByClassName('article-saveBtn'));
+    const list = document.getElementsByClassName('article-saveBtn');
+    for (let item of list) {
+      item.style.display = 'none';
+    }
   }, []);
 
   if (!user.email) return <Redirect to="/login" />;
@@ -97,7 +107,10 @@ function Profile() {
           <Divider />
         </Box>
         {articles.map((article, index) => (
-          <article key={index} className="profile-articles--article">
+          <article
+            key={index}
+            className={`profile-articles--article, ${classes.profileArticles_Article}`}
+          >
             {/* saved article key names doesnt match article keys from news api */}
             <Articles
               article={{
@@ -111,6 +124,7 @@ function Profile() {
               }}
               articleSection="bottom"
             />
+            <span>j</span>
           </article>
         ))}
       </main>
