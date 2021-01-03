@@ -49,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
     },
     profileArticlesHeader: {
       textAlign: 'center',
+      '& h2': {
+        fontSize: theme.spacing(2.3),
+      },
     },
   },
 }));
@@ -90,7 +93,7 @@ function Profile() {
           mb={5}
           className={`profile-articles--header, ${classes.profileArticlesHeader}`}
         >
-          <h1>Your Articles</h1>
+          <h2>Your Articles</h2>
           <Divider />
         </Box>
         {articles.map((article, index) => (
