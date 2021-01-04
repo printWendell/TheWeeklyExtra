@@ -11,6 +11,8 @@ import { Avatar, Box, Divider, IconButton } from '@material-ui/core';
 import { makeStyles, fade } from '@material-ui/core/styles';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Grid from '@material-ui/core/Grid';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
   profileUser: {
@@ -28,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(15),
     fontSize: theme.spacing(8),
   },
-  article_deleteBtn: {
+  gridButton_delete: {
     color: fade(theme.palette.error.light, 0.75),
     '&:hover': {
       color: fade(theme.palette.error.dark, 0.75),
@@ -39,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
       background: 'linear-gradient(to bottom, #8D91A4, #8D91A4 60%, white 40%)',
       display: 'block',
     },
-    profileUserIcon: {
+    profileUser_Icon: {
       marginRight: '0',
     },
     userIcon: {
@@ -65,13 +67,24 @@ const useStyles = makeStyles((theme) => ({
         fontSize: theme.spacing(2.3),
       },
     },
+    profileAricles_Grid: {
+      flexDirection: 'column-reverse',
+    },
+    gridButton: {
+      textAlign: 'center',
+      marginTop: '1rem',
+    },
   },
 }));
 
 function Profile() {
   const classes = useStyles();
   const cookie = Cookie.get('user');
+  const { enqueueSnackbar } = useSnackbar();
   let user = cookieStrToObj(cookie);
+  if (!user.email) return <Redirect to="/login" />;
+
+  let snackbarMessage = '';
 
   const [articles, setArticles] = useState([]);
 
@@ -79,6 +92,7 @@ function Profile() {
     getSavedArticles().then((data) => setArticles(data));
   }, []);
 
+  // profile functions
   function deleteArticle(email, url) {
     try {
       deleteSavedArticles(email, url);
@@ -86,12 +100,29 @@ function Profile() {
         (article) => article.link_url !== url
       );
       setArticles(newArticleList);
+      snackbarMessage = 'Article deleted from Profile';
     } catch (error) {
       console.log(error);
+      snackbarMessage = 'Failed to delete from Profile';
     }
   }
 
-  if (!user.email) return <Redirect to="/login" />;
+  const handleSnackBar = () => {
+    enqueueSnackbar(
+      <div className="article-deleteBtn-snackbar">
+        <p className="snackbar">
+          <CheckCircleIcon className="snackbar-icon" />
+          {snackbarMessage}
+        </p>
+      </div>
+    );
+  };
+
+  // handle delete function and snackbar
+  const deleteArticleAndOpenSnackBar = (email, url) => {
+    deleteArticle(email, url);
+    handleSnackBar();
+  };
 
   return (
     <Box className="profile" mt={3}>
@@ -114,12 +145,13 @@ function Profile() {
       </Box>
       <main className="profile-articles">
         <Box
-          mb={5}
+          mb={2}
           className={`profile-articles--header, ${classes.profileArticles_Header}`}
         >
           <h2>Your Articles</h2>
           <Divider />
         </Box>
+
         {articles.map((article, index) => (
           <article
             key={index}
@@ -127,8 +159,11 @@ function Profile() {
           >
             {/* saved article key names doesnt match article keys from news api */}
             {/* use grid instead of flex to avoid weird width issues */}
-            <Grid container>
-              <Grid item xs={12} sm={11}>
+            <Grid
+              container
+              className={`profile-articles--grid ${classes.profileAricles_Grid}`}
+            >
+              <Grid item xs={12} sm={11} className="grid-article">
                 <Articles
                   article={{
                     author: article.author,
@@ -141,14 +176,19 @@ function Profile() {
                   }}
                   fromProfile="yes"
                   articleSection="bottom"
-                  className={classes.article}
+                  className={`article ${classes.article}`}
                 />
               </Grid>
-              <Grid item xs={12} sm={1}>
+              <Grid
+                item
+                xs={12}
+                sm={1}
+                className={`grid-button ${classes.gridButton}`}
+              >
                 <IconButton
-                  className={classes.article_deleteBtn}
+                  className={`grid-button--delete ${classes.gridButton_delete}`}
                   onClick={() => {
-                    deleteArticle(user.email, article.link_url);
+                    deleteArticleAndOpenSnackBar(user.email, article.link_url);
                   }}
                 >
                   <DeleteIcon />
