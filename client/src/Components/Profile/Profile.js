@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import Cookie from 'js-cookie';
-import { cookieStrToObj, getSavedArticles } from '../../Helpers/functions';
+import {
+  cookieStrToObj,
+  getSavedArticles,
+  deleteSavedArticles,
+} from '../../Helpers/functions';
 import Articles from '../Articles/Articles';
-import { Avatar, Box, Divider } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { Avatar, Box, Divider, IconButton } from '@material-ui/core';
+import { makeStyles, fade } from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
   profileUser: {
@@ -13,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '5px',
     padding: '3rem',
   },
-  profileUserIcon: {
+  profileUser_Icon: {
     marginRight: '3rem',
   },
   userIcon: {
@@ -22,10 +28,11 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(15),
     fontSize: theme.spacing(8),
   },
-  profileArticles_Article: {
-    // display: 'flex',
-    // flexDirection: 'row',
-    // justifyContent: 'space-between',
+  article_deleteBtn: {
+    color: fade(theme.palette.error.light, 0.75),
+    '&:hover': {
+      color: fade(theme.palette.error.dark, 0.75),
+    },
   },
   [theme.breakpoints.down('xs')]: {
     profileUser: {
@@ -42,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: 'auto',
       marginRight: 'auto',
     },
-    profileUserInfo: {
+    profileUser_Info: {
       textAlign: 'center',
       '& h1': {
         fontSize: theme.spacing(3),
@@ -52,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: theme.spacing(1.7),
       },
     },
-    profileArticlesHeader: {
+    profileArticles_Header: {
       textAlign: 'center',
       '& h2': {
         fontSize: theme.spacing(2.3),
@@ -70,12 +77,19 @@ function Profile() {
 
   useEffect(() => {
     getSavedArticles().then((data) => setArticles(data));
-    // console.log(document.getElementsByClassName('article-saveBtn'));
-    const list = document.getElementsByClassName('article-saveBtn');
-    for (let item of list) {
-      item.style.display = 'none';
-    }
   }, []);
+
+  function deleteArticle(email, url) {
+    try {
+      deleteSavedArticles(email, url);
+      let newArticleList = articles.filter(
+        (article) => article.link_url !== url
+      );
+      setArticles(newArticleList);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   if (!user.email) return <Redirect to="/login" />;
 
@@ -87,12 +101,12 @@ function Profile() {
         flexDirection="row"
         mb={5}
       >
-        <Box className={`profile-user--icon, ${classes.profileUserIcon}`}>
+        <Box className={`profile-user--icon, ${classes.profileUser_Icon}`}>
           <Avatar className={`user--icon, ${classes.userIcon}`}>
             {user.name.charAt(0)}
           </Avatar>
         </Box>
-        <Box className={`profile-user--info, ${classes.profileUserInfo}`}>
+        <Box className={`profile-user--info, ${classes.profileUser_Info}`}>
           <h1>{user.name}</h1>
           <p>{user.email}</p>
           <p>{articles.length} Saved Articles</p>
@@ -101,7 +115,7 @@ function Profile() {
       <main className="profile-articles">
         <Box
           mb={5}
-          className={`profile-articles--header, ${classes.profileArticlesHeader}`}
+          className={`profile-articles--header, ${classes.profileArticles_Header}`}
         >
           <h2>Your Articles</h2>
           <Divider />
@@ -112,19 +126,35 @@ function Profile() {
             className={`profile-articles--article, ${classes.profileArticles_Article}`}
           >
             {/* saved article key names doesnt match article keys from news api */}
-            <Articles
-              article={{
-                author: article.author,
-                title: article.title,
-                description: article.description,
-                publishedAt: article.published_at,
-                source: article.source,
-                url: article.link_url,
-                urlToImage: article.img_url,
-              }}
-              articleSection="bottom"
-            />
-            <span>j</span>
+            {/* use grid instead of flex to avoid weird width issues */}
+            <Grid container>
+              <Grid item xs={12} sm={11}>
+                <Articles
+                  article={{
+                    author: article.author,
+                    title: article.title,
+                    description: article.description,
+                    publishedAt: article.published_at,
+                    source: article.source,
+                    url: article.link_url,
+                    urlToImage: article.img_url,
+                  }}
+                  fromProfile="yes"
+                  articleSection="bottom"
+                  className={classes.article}
+                />
+              </Grid>
+              <Grid item xs={12} sm={1}>
+                <IconButton
+                  className={classes.article_deleteBtn}
+                  onClick={() => {
+                    deleteArticle(user.email, article.link_url);
+                  }}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </Grid>
+            </Grid>
           </article>
         ))}
       </main>

@@ -7,7 +7,7 @@ import './ArticleStyles/Articles.css';
 import ArticleSaveBtn from './SaveArticles/ArticleSaveBtn';
 
 // =========Component==================== //
-function Articles({ article, articleSection }) {
+function Articles({ article, articleSection, fromProfile }) {
   // convert utc to string date
   function changeDate(date) {
     const utcDate = new Date(`${date}`);
@@ -36,16 +36,26 @@ function Articles({ article, articleSection }) {
           {articleSection === 'top-left' ? (
             <h2>
               {article.title}{' '}
-              <span className="article-saveBtn">
-                <ArticleSaveBtn article={article} />
-              </span>
+              {/* if articles are siplayed from the profile page dont display saveBtn */}
+              {fromProfile === 'yes' ? (
+                ''
+              ) : (
+                <span className="article-saveBtn">
+                  <ArticleSaveBtn article={article} />
+                </span>
+              )}
             </h2>
           ) : (
             <h3>
               {article.title}{' '}
-              <span className="article-saveBtn">
-                <ArticleSaveBtn article={article} />
-              </span>
+              {/* if articles are siplayed from the profile page dont display saveBtn */}
+              {fromProfile === 'yes' ? (
+                ''
+              ) : (
+                <span className="article-saveBtn">
+                  <ArticleSaveBtn article={article} />
+                </span>
+              )}
             </h3>
           )}
         </Box>
@@ -77,5 +87,6 @@ function Articles({ article, articleSection }) {
 Articles.propTypes = {
   article: PropTypes.object,
   articleSection: PropTypes.string,
+  fromProfile: PropTypes.string,
 };
 export default Articles;
