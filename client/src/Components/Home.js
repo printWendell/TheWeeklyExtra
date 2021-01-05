@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Divider from '@material-ui/core/Divider';
 import Articles from './Articles/Articles';
+import { Box } from '@material-ui/core';
 
 //=======material-ui css styles============//
 const useStyles = makeStyles((theme) => ({
@@ -56,7 +57,7 @@ function Home() {
   }, []);
 
   return (
-    <div className="home">
+    <Box className="home" mt={3} mb={5}>
       <section className={`home-top-section ${classes.topSectionGrid}`}>
         <div className={`home-top-section--left ${classes.topSectionGridLeft}`}>
           {homeNews.slice(0, 1).map((article, index) => (
@@ -90,7 +91,7 @@ function Home() {
           </article>
         ))}
       </section>
-    </div>
+    </Box>
   );
 }
 export default Home;
