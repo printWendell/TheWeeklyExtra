@@ -71,7 +71,11 @@ function LoggedInMenu(props) {
           <Avatar className={classes.loggedIcon}>{user.name.charAt(0)}</Avatar>
           <h3>{user.name}</h3>
         </Box>
-        <Link to="/profile" className={classes.profileMenuLink}>
+        <Link
+          to="/profile"
+          className={classes.profileMenuLink}
+          onClick={props.handleCloseMenu}
+        >
           <MenuItem className={classes.menuLinkItem}>
             <PersonIcon />
             Profile
