@@ -13,6 +13,7 @@ import Terms from './Components/Register/Terms';
 import PrivacyPolicy from './Components/Register/PrivacyPolicy';
 import Profile from './Components/Profile/Profile';
 import { SnackbarProvider } from 'notistack';
+import Footer from './Components/Footer/Footer';
 
 function App() {
   return (
@@ -74,6 +75,7 @@ function App() {
               <Route exact path="/profile" component={Profile} />
             </Switch>
           </Container>
+          <Footer />
         </Router>
       </div>
     </SnackbarProvider>

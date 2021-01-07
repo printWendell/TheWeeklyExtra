@@ -1,6 +1,22 @@
 * {
   font-family: 'Montserrat', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 }
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
+}
+
+.App {
+  padding-bottom: 25.5rem;
+}
 
 h2 {
   line-height: 2rem;
@@ -21,6 +37,9 @@ h3 {
 }
 
 @media screen and (max-width: 600px) {
+  .App {
+    padding-bottom: 30rem;
+  }
   h2 {
     font-size: 1.3rem;
   }
