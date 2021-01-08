@@ -14,6 +14,7 @@ import PrivacyPolicy from './Components/Register/PrivacyPolicy';
 import Profile from './Components/Profile/Profile';
 import { SnackbarProvider } from 'notistack';
 import Footer from './Components/Footer/Footer';
+import NotFound from './Components/NotFound';
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function App() {
 
               {/* account routes */}
               <Route exact path="/profile" component={Profile} />
+              <Route component={NotFound} />
             </Switch>
           </Container>
           <Footer />
