@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 import Articles from '../Articles/Articles';
-import { Divider } from '@material-ui/core';
+import { Box, Divider } from '@material-ui/core';
 
 function Categories({ category }) {
   const [news, setNews] = useState([]);
@@ -25,7 +25,7 @@ function Categories({ category }) {
   }
 
   return (
-    <div>
+    <Box mt={5}>
       {/* Helmet Title */}
       <Helmet>
         <title>{capitalizeString(category)} | TheWeeklyExtra</title>
@@ -39,7 +39,7 @@ function Categories({ category }) {
           <Articles article={article} articleSection="bottom" />
         </article>
       ))}
-    </div>
+    </Box>
   );
 }
 

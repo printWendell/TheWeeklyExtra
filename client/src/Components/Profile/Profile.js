@@ -125,7 +125,7 @@ function Profile() {
   };
 
   return (
-    <Box className="profile" mt={3}>
+    <Box className="profile" mt={5}>
       <Box
         className={`profile-user, ${classes.profileUser}`}
         display="flex"

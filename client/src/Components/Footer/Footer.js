@@ -2,6 +2,7 @@ import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Container, Divider, Grid } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import Logo from '../../images/TheWeeklyExtraLogo.png';
 
 const useStyles = makeStyles((theme) => ({
   footer: {
@@ -20,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: '0',
     paddingTop: '1.5rem',
   },
+  footerLogo: {
+    width: '140px',
+  },
   footerItem: {
     '&:hover': {
       color: fade(theme.palette.error.light, 0.75),
@@ -28,6 +32,11 @@ const useStyles = makeStyles((theme) => ({
   footerDivider: {
     marginTop: '1rem',
     backgroundColor: '#bdbdbd',
+  },
+  [theme.breakpoints.down('xs')]: {
+    footerLogo: {
+      width: '105px',
+    },
   },
 }));
 
@@ -43,7 +52,11 @@ function Footer() {
         >
           <Grid item xs={12} sm={4} className="footer-columns--logo">
             <Link to="/">
-              <h2>WX</h2>
+              <img
+                src={Logo}
+                alt="theweeklyextra-logo"
+                className={classes.footerLogo}
+              />
             </Link>
           </Grid>
           <Grid item xs={6} sm={4} className="footer-columns--sections">

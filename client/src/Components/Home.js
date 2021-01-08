@@ -7,6 +7,9 @@ import { Box } from '@material-ui/core';
 
 //=======material-ui css styles============//
 const useStyles = makeStyles((theme) => ({
+  home: {
+    marginTop: '3rem',
+  },
   articlesFlex: {
     display: 'flex',
     alignItems: 'flex-end',
@@ -57,7 +60,7 @@ function Home() {
   }, []);
 
   return (
-    <Box className="home" mt={3} mb={5}>
+    <Box className={`home ${classes.home}`} mt={3} mb={5}>
       <section className={`home-top-section ${classes.topSectionGrid}`}>
         <div className={`home-top-section--left ${classes.topSectionGridLeft}`}>
           {homeNews.slice(0, 1).map((article, index) => (
