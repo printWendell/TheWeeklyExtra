@@ -51,7 +51,6 @@ function ResultsPagination({ page, search, sort }) {
   const classes = useStyles();
   const handleChange = (event, value) => {
     event.preventDefault();
-    console.log(value);
     location.assign(
       `/search?search=${search}&page=${value}&sort=${sort || 'relevancy'}`
     );

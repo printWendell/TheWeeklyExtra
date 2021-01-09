@@ -21,7 +21,6 @@ function Results() {
       );
       const data = await res.json();
       setResults(data.articles);
-      console.log(data);
     }
     getSearchResults();
   }, []);

@@ -14,7 +14,6 @@ function Categories({ category }) {
       const res = await fetch(`/api/news/category/${category}`);
       const data = await res.json();
       setNews(data.articles);
-      console.log(data);
     }
     getNewsCategory();
   }, []);
@@ -25,7 +24,7 @@ function Categories({ category }) {
   }
 
   return (
-    <Box mt={3}>
+    <Box mt={5}>
       {/* Helmet Title */}
       <Helmet>
         <title>{capitalizeString(category)} | TheWeeklyExtra</title>

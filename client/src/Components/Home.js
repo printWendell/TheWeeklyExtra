@@ -53,7 +53,6 @@ function Home() {
     const getHomeNews = async () => {
       const res = await fetch('/api/news');
       const data = await res.json();
-      console.log(data);
       setHomeNews(data.articles);
     };
     getHomeNews();

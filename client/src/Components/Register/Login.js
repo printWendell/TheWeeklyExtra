@@ -42,7 +42,6 @@ function Login() {
 
   const handleFormChange = (e) => {
     e.preventDefault();
-    console.log(e.target.name);
     if (e.target.name === 'email') {
       setEmail(e.target.value);
     } else if (e.target.name === 'password') {
