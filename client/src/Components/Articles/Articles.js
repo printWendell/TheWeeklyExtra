@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Divider from '@material-ui/core/Divider';
-// import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 import './ArticleStyles/Articles.css';
 import ArticleSaveBtn from './SaveArticles/ArticleSaveBtn';
+import Logo from '../../images/TheWeeklyExtraLogo.png';
 
 // =========Component==================== //
 function Articles({ article, articleSection, fromProfile }) {
@@ -36,7 +36,7 @@ function Articles({ article, articleSection, fromProfile }) {
           {articleSection === 'top-left' ? (
             <h2>
               {article.title}{' '}
-              {/* if articles are siplayed from the profile page dont display saveBtn */}
+              {/* if articles are diplayed from the profile page dont display saveBtn */}
               {fromProfile === 'yes' ? (
                 ''
               ) : (
@@ -48,7 +48,7 @@ function Articles({ article, articleSection, fromProfile }) {
           ) : (
             <h3>
               {article.title}{' '}
-              {/* if articles are siplayed from the profile page dont display saveBtn */}
+              {/* if articles are diplayed from the profile page dont display saveBtn */}
               {fromProfile === 'yes' ? (
                 ''
               ) : (
@@ -66,12 +66,17 @@ function Articles({ article, articleSection, fromProfile }) {
 
         <Box className="article-content">
           <Box className="article-content--img">
-            <img
-              className="content-img"
-              src={article.urlToImage}
-              alt=""
-              loading="lazy"
-            />
+            {/* if no image use logo */}
+            {article.urlToImage === null ? (
+              <img src={Logo} alt="article-img" className="content-img" />
+            ) : (
+              <img
+                className="content-img"
+                src={article.urlToImage}
+                alt="article-img"
+                loading="lazy"
+              />
+            )}
           </Box>
           <Box className="article-content--description">
             <p>{article.description}</p>

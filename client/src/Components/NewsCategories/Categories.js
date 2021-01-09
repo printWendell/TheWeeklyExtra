@@ -25,7 +25,7 @@ function Categories({ category }) {
   }
 
   return (
-    <Box mt={5}>
+    <Box mt={3}>
       {/* Helmet Title */}
       <Helmet>
         <title>{capitalizeString(category)} | TheWeeklyExtra</title>
